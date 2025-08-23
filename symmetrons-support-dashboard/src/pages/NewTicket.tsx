@@ -50,7 +50,13 @@ export function NewTicket() {
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <div>
           <label className="block text-sm font-medium text-gray-700">Department</label>
-          <input className="mt-1 w-full border rounded px-3 py-2" {...register('department')} />
+          {/* <input className="mt-1 w-full border rounded px-3 py-2" {...register('department')} /> */}
+          <select className="mt-1 w-full border rounded px-3 py-2" {...register('department')}>
+            <option value="IT">IT</option>
+            <option value="hr">HR Support</option>
+            <option value="Admin">Admin Support</option>
+            <option value="Finance">Finance</option>
+          </select>
         </div>
         <div>
           <label className="block text-sm font-medium text-gray-700">Priority</label>
