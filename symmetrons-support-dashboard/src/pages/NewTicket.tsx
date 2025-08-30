@@ -3,6 +3,7 @@ import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+import '../NewTicket.css' // import the CSS
 
 const schema = z.object({
   subject: z.string().min(1),
@@ -18,7 +19,7 @@ export function NewTicket() {
   const navigate = useNavigate()
   const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<FormValues>({
     resolver: zodResolver(schema),
-    defaultValues: { priority: 'medium' }
+    // defaultValues: { priority: '' }
   })
 
   async function onSubmit(values: FormValues) {
@@ -41,26 +42,28 @@ export function NewTicket() {
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="max-w-2xl bg-white border rounded-lg p-6 space-y-4">
+    <form onSubmit={handleSubmit(onSubmit)} className="ticket-form">
       <div>
-        <label className="block text-sm font-medium text-gray-700">Subject</label>
-        <input className="mt-1 w-full border rounded px-3 py-2" {...register('subject')} />
-        {errors.subject && <p className="text-sm text-red-600">Subject is required</p>}
+        <label>Subject</label>
+        <input type="text" {...register('subject')} />
+        {errors.subject && <p className="text-red">Subject is required</p>}
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+
+      <div className="form-grid">
         <div>
-          <label className="block text-sm font-medium text-gray-700">Department</label>
-          {/* <input className="mt-1 w-full border rounded px-3 py-2" {...register('department')} /> */}
-          <select className="mt-1 w-full border rounded px-3 py-2" {...register('department')}>
-            <option value="IT">IT</option>
-            <option value="hr">HR Support</option>
+          <label>Department</label>
+          <select {...register('department')}>
+            <option value="" >Select department</option>
+            <option value="IT">IT Support</option>
+            <option value="HR">HR Support</option>
             <option value="Admin">Admin Support</option>
             <option value="Finance">Finance</option>
           </select>
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700">Priority</label>
-          <select className="mt-1 w-full border rounded px-3 py-2" {...register('priority')}>
+          <label>Priority</label>
+          <select {...register('priority')}>
+            <option value="" >Select priority</option>
             <option value="low">Low</option>
             <option value="medium">Medium</option>
             <option value="high">High</option>
@@ -68,17 +71,20 @@ export function NewTicket() {
           </select>
         </div>
       </div>
+
       <div>
-        <label className="block text-sm font-medium text-gray-700">Description</label>
-        <textarea rows={5} className="mt-1 w-full border rounded px-3 py-2" {...register('description')} />
+        <label>Description</label>
+        <textarea rows={5} {...register('description')} />
       </div>
+
       <div>
-        <label className="block text-sm font-medium text-gray-700">Attachments</label>
-        <input type="file" multiple className="mt-1" {...register('attachments')} />
-        <p className="text-xs text-gray-500 mt-1">Max 10MB per file</p>
+        <label>Attachments</label>
+        <input type="file" multiple {...register('attachments')} />
+        <p className="text-xs">Max 10MB per file</p>
       </div>
-      <div className="flex justify-end">
-        <button disabled={isSubmitting} className="bg-brand-600 text-white px-4 py-2 rounded disabled:opacity-50">
+
+      <div className="form-actions">
+        <button type="submit" disabled={isSubmitting}>
           {isSubmitting ? 'Submitting...' : 'Submit Ticket'}
         </button>
       </div>

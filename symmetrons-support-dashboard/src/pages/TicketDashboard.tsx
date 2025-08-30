@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'
+import '../TicketDashboard.css' // import the CSS
 
 export function TicketDashboard() {
   const { data } = useQuery({
@@ -20,11 +21,11 @@ export function TicketDashboard() {
   ]
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+    <div className="dashboard-grid">
       {items.map((i) => (
-        <div key={i.label} className="bg-white border rounded-lg p-4 shadow-sm">
-          <div className="text-sm text-gray-500">{i.label}</div>
-          <div className="mt-1 text-3xl font-semibold text-gray-900">{i.value}</div>
+        <div key={i.label} className="dashboard-card">
+          <div className="dashboard-label">{i.label}</div>
+          <div className="dashboard-value">{i.value}</div>
         </div>
       ))}
     </div>

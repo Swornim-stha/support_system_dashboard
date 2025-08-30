@@ -1,0 +1,50 @@
+/* TicketDashboard.css */
+
+/* Grid layout */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  margin: 1rem;
+}
+
+@media (min-width: 640px) {
+  .dashboard-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .dashboard-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* Card styling */
+.dashboard-card {
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb; /* light gray */
+  border-radius: 0.75rem;
+  padding: 1rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.dashboard-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* Label text */
+.dashboard-label {
+  font-size: 0.875rem; /* 14px */
+  color: #6b7280; /* gray */
+}
+
+/* Value text */
+.dashboard-value {
+  margin-top: 0.25rem;
+  font-size: 2rem;
+  font-weight: 600;
+  color: #111827; /* dark gray */
+}
