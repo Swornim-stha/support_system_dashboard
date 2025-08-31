@@ -1,0 +1,83 @@
+/* General App Layout - minimal styles to support the header */
+.app-container {
+  font-family: sans-serif;
+}
+
+/* Header Styles */
+.app-header {
+  background-color: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+  padding: 0.5rem 1rem;
+  margin-bottom: 2rem;
+}
+
+.header-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1680px;
+  margin: 0 auto;
+}
+.brand-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.brand-name {
+  display: grid;
+}
+
+.brand-name-part1 {
+  margin-left: 0.5rem; /* ml-2 */
+  margin-bottom: 0; /* mb-0 */
+  font-size: 1.25rem; /* text-xl */
+  font-weight: 600; /* font-semibold */
+  color: #3b82f6; /* text-orange-500 */
+}
+
+.brand-name-part2 {
+  margin-left: 0.5rem; /* ml-2 */
+  font-size: 1.2rem; /* text-xl */
+  font-weight: 600; /* font-semibold */
+  color: #f97316; /* text-blue-500 */
+}
+/* Brand/Logo Styles */
+.logo {
+  height: 40px;
+  width: auto;
+}
+
+/* Navigation Links Container */
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 1rem; /* Space between nav items */
+  text-decoration: none;
+}
+.nav-links a {
+  text-decoration: none;
+  color: #333; /* set your desired color */
+  font-weight: 500;
+}
+/* Target the last link in the nav to style it as a button */
+.nav-links a:last-child {
+  background-color: #6366f1; /* A nice indigo color like in the image */
+  color: #ffffff;
+  padding: 0.6rem 1.2rem;
+  border-radius: 0.375rem; /* 6px */
+  font-weight: 500;
+  transition: background-color 0.2s ease-in-out;
+  text-decoration: none;
+}
+
+/* Hover state for the "New Ticket" button */
+.nav-links a:last-child:hover {
+  background-color: #4f46e5;
+}
+
+/*
+  NOTE: Your existing `navLinkClass` logic will apply a different
+  background color when the "New Ticket" link is active. If you want the button
+  to remain the same color when active, you would need to adjust the logic in App.js.
+  This CSS works without any changes to your JavaScript.
+*/

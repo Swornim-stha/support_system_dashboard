@@ -13,23 +13,21 @@ const schema = z.object({
   attachments: z.any().optional(),
 })
 
-type FormValues = z.infer<typeof schema>
-
 export function NewTicket() {
   const navigate = useNavigate()
-  const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<FormValues>({
+  const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm({
     resolver: zodResolver(schema),
     // defaultValues: { priority: '' }
   })
 
-  async function onSubmit(values: FormValues) {
+  async function onSubmit(values) {
     const form = new FormData()
     form.append('subject', values.subject)
     form.append('department', values.department)
     form.append('priority', values.priority)
     if (values.description) form.append('description', values.description)
 
-    const files: FileList | undefined = (values as any).attachments?.[0]?.files || (values as any).attachments
+    const files = values.attachments
     if (files) {
       Array.from(files).forEach((f) => form.append('attachments[]', f))
     }
@@ -53,7 +51,7 @@ export function NewTicket() {
         <div>
           <label>Department</label>
           <select {...register('department')}>
-            <option value="" >Select department</option>
+            <option value="">Select department</option>
             <option value="IT">IT Support</option>
             <option value="HR">HR Support</option>
             <option value="Admin">Admin Support</option>
@@ -63,7 +61,7 @@ export function NewTicket() {
         <div>
           <label>Priority</label>
           <select {...register('priority')}>
-            <option value="" >Select priority</option>
+            <option value="">Select priority</option>
             <option value="low">Low</option>
             <option value="medium">Medium</option>
             <option value="high">High</option>

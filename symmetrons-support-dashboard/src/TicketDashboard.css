@@ -16,7 +16,7 @@
 
 @media (min-width: 1024px) {
   .dashboard-grid {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
@@ -37,8 +37,8 @@
 
 /* Label text */
 .dashboard-label {
-  font-size: 0.875rem; /* 14px */
-  color: #6b7280; /* gray */
+  font-size: 1rem; /* 14px */
+  color: #23252b; /* gray */
 }
 
 /* Value text */

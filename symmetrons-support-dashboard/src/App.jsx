@@ -3,7 +3,7 @@ import { useMemo } from 'react'
 import { TicketDashboard } from './pages/TicketDashboard'
 import { TicketList } from './pages/TicketList'
 import { NewTicket } from './pages/NewTicket'
-import './App.css'
+import './Navbar.css';
 
 function App() {
   const navLinkClass = useMemo(
@@ -19,7 +19,11 @@ function App() {
   <header className="app-header">
     <div className="header-inner">
       <div className="brand-container">
-        <h1 className="brand-name">Symmetrons Support</h1>
+        <img src="logo.png" alt="Symmetrons Support" className="logo" />
+        <div className="brand-name">
+          <span className="brand-name-part1">Four</span>
+          <span className="brand-name-part2">Symmetrons</span>
+        </div>
       </div>
       <nav className="nav-links">
         <NavLink to="/" className={navLinkClass} end>

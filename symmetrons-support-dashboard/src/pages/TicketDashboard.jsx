@@ -7,7 +7,7 @@ export function TicketDashboard() {
     queryKey: ['stats'],
     queryFn: async () => {
       const res = await axios.get(import.meta.env.VITE_API_URL + '/tickets/stats')
-      return res.data as { total: number; open: number; resolved_today: number; urgent: number }
+      return res.data
     },
   })
 

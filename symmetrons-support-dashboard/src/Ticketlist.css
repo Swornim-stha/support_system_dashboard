@@ -1,0 +1,76 @@
+.ticket-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.filter-bar {
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: flex-end;
+}
+
+.filter-item label {
+  display: block;
+  font-size: 12px;
+  color: #555;
+  margin-bottom: 4px;
+}
+
+.filter-item select,
+.filter-item input {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 6px 8px;
+  font-size: 14px;
+}
+
+.table-wrapper {
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.ticket-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 18px;
+}
+
+.ticket-table th {
+  text-align: left;
+  padding: 12px;
+  background: #f9f9f9;
+  color: #444;
+}
+
+.ticket-table td {
+  padding: 12px;
+  border-top: 1px solid #eee;
+}
+
+/* Priority colors */
+.priority-low {
+  color: green;
+}
+.priority-medium {
+  color: goldenrod;
+}
+.priority-high {
+  color: orange;
+}
+.priority-urgent {
+  color: red;
+}
+
+.no-tickets {
+  padding: 24px;
+  text-align: center;
+  color: #777;
+}
