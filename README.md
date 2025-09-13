@@ -1,6 +1,6 @@
 # Four Symmetrons — Support System Dashboard
 
-A full-stack ticketing system with a Laravel API backend and a Vite React (TypeScript + Tailwind) frontend.
+A full-stack ticketing system with a Laravel API backend and a Vite React (javascript) frontend.
 
 ## Project Structure
 
@@ -80,7 +80,6 @@ npm run build
 - Ticket list with filters
 - New ticket form with attachments (stored on Laravel public disk)
 - CORS enabled for local development
-- Tailwind brand theme for Four Symmetrons
 
 ## Notes
 

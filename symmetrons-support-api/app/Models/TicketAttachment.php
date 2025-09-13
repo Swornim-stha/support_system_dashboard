@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class TicketAttachment extends Model
 {
@@ -15,8 +15,8 @@ class TicketAttachment extends Model
         'mime_type',
     ];
 
-    public function ticket(): BelongsTo
+    public function attachment(): HasOne // 👈 Add this entire function
     {
-        return $this->belongsTo(Ticket::class);
+        return $this->hasOne(TicketAttachment::class);
     }
 }

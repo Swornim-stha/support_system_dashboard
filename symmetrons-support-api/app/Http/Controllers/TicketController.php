@@ -12,10 +12,15 @@ use Illuminate\Validation\Rules\Enum;
 
 class TicketController extends Controller
 {
+    /**
+     * Display a paginated list of tickets with filters and attachment URLs.
+     */
     public function index(Request $request)
     {
-        $query = Ticket::query()->latest();
+        // Start the query and eager load the 'attachment' relationship to make it efficient
+        $query = Ticket::with('attachment')->latest();
 
+        // Apply filters from the request
         if ($request->filled('status')) {
             $query->where('status', $request->string('status'));
         }
@@ -26,9 +31,31 @@ class TicketController extends Controller
             $query->where('department', $request->string('department'));
         }
 
-        return $query->paginate(20);
+        // Get the items-per-page limit from the request, default to 20
+        $perPage = $request->query('limit', 20);
+
+        // Execute the query to get the paginated results
+        $tickets = $query->paginate($perPage);
+
+        // Transform the collection to add the full, public attachment URL
+        $tickets->getCollection()->transform(function ($ticket) {
+            // Check if the eager-loaded attachment relationship exists for this ticket
+            if ($ticket->attachment) {
+                // If it exists, create the full URL from its 'path' and add it as a new 'attachment_url' property
+                $ticket->attachment_url = Storage::url($ticket->attachment->path);
+            } else {
+                // Otherwise, set the property to null
+                $ticket->attachment_url = null;
+            }
+            return $ticket;
+        });
+
+        return response()->json($tickets);
     }
 
+    /**
+     * Get ticket statistics.
+     */
     public function stats()
     {
         $today = Carbon::today();
@@ -41,6 +68,9 @@ class TicketController extends Controller
         ];
     }
 
+    /**
+     * Store a new ticket and its attachments.
+     */
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -48,7 +78,7 @@ class TicketController extends Controller
             'department' => ['required', 'string', 'max:100'],
             'priority' => ['required', 'in:low,medium,high,urgent'],
             'description' => ['nullable', 'string'],
-            'attachments.*' => ['file', 'max:10240'],
+            'attachments.*' => ['file', 'max:10240'], // 10MB max per file
         ]);
 
         $ticket = Ticket::create([
@@ -77,6 +107,9 @@ class TicketController extends Controller
         return response()->json($ticket->load('attachments'), 201);
     }
 
+    /**
+     * Mark a ticket as resolved.
+     */
     public function resolve(Ticket $ticket)
     {
         $ticket->update([
@@ -85,5 +118,43 @@ class TicketController extends Controller
         ]);
 
         return response()->json($ticket);
+    }
+
+    /**
+     * Update the status of a ticket.
+     */
+    public function update(Request $request, Ticket $ticket)
+    {
+        $validated = $request->validate([
+            'status' => 'required|string|in:open,in_progress,resolved,closed',
+        ]);
+
+        $ticket->status = $validated['status'];
+        $ticket->save();
+
+        return response()->json([
+            'success' => true,
+            'data' => $ticket,
+        ]);
+    }
+
+    /**
+     * Delete a ticket and all its associated attachments.
+     */
+    public function destroy(Ticket $ticket)
+    {
+        // Delete associated attachments from storage and database
+        foreach ($ticket->attachments as $attachment) {
+            Storage::disk('public')->delete($attachment->path);
+            $attachment->delete();
+        }
+
+        // Delete the ticket itself
+        $ticket->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Ticket and its attachments deleted successfully.',
+        ]);
     }
 }

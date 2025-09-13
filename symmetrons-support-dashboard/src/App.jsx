@@ -3,6 +3,7 @@ import { useMemo } from 'react'
 import { TicketDashboard } from './pages/TicketDashboard'
 import { TicketList } from './pages/TicketList'
 import { NewTicket } from './pages/NewTicket'
+import { AdminPanel } from './pages/Adminpannel'
 import './Navbar.css';
 
 function App() {
@@ -35,6 +36,9 @@ function App() {
         <NavLink to="/new" className={navLinkClass}>
           New Ticket
         </NavLink>
+        <NavLink to="/admin" className={navLinkClass}>
+          Admin
+        </NavLink>
       </nav>
     </div>
   </header>
@@ -44,6 +48,7 @@ function App() {
       <Route index element={<TicketDashboard />} />
       <Route path="/tickets" element={<TicketList />} />
       <Route path="/new" element={<NewTicket />} />
+      <Route path="/admin" element={<AdminPanel />} />
     </Routes>
   </main>
 </div>

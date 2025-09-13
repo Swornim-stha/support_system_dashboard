@@ -1,0 +1,72 @@
+/* ... Your existing styles ... */
+
+.pagination-container {
+  display: flex;
+  justify-content: flex-end; /* Aligns pagination to the right */
+  padding: 16px;
+  border-top: 1px solid #e0e0e0;
+}
+
+.pagination {
+  display: flex;
+  align-items: center;
+  gap: 20px; /* Space between elements */
+}
+
+.pagination-text {
+  font-size: 14px;
+  color: #333;
+}
+
+.pagination-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pagination-controls button {
+  width: 32px;
+  height: 32px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+  color: #666;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s;
+}
+
+.pagination-controls button:hover:not(:disabled) {
+  background-color: #f0f0f0;
+}
+
+.pagination-controls button:disabled {
+  color: #ccc;
+  cursor: not-allowed;
+}
+
+.pagination-controls .page-number {
+  border: 1px solid #007bff; /* Blue border */
+  background-color: #fff;
+  color: #007bff; /* Blue text */
+  min-width: 32px;
+  height: 32px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 500;
+  font-size: 14px;
+  padding: 0 8px;
+}
+
+.page-size-select {
+  padding: 6px 12px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  background-color: #f8f9fa;
+  font-size: 14px;
+}

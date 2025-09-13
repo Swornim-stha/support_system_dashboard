@@ -1,27 +1,29 @@
-import { useQuery } from '@tanstack/react-query'
-import axios from 'axios'
-import { useSearchParams } from 'react-router-dom'
-import '../TicketList.css' // import the CSS
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
+import { useSearchParams } from "react-router-dom";
+import { Pagination } from "../Pagination";
+import "../TicketList.css"; // import the CSS
 
 export function TicketList() {
-  const [params, setParams] = useSearchParams()
+  const [params, setParams] = useSearchParams();
 
   const { data } = useQuery({
-    queryKey: ['tickets', params.toString()],
+    queryKey: ["tickets", params.toString()],
     queryFn: async () => {
-      const url = new URL(import.meta.env.VITE_API_URL + '/tickets')
-      params.forEach((v, k) => url.searchParams.set(k, v))
-      const res = await axios.get(url.toString())
-      return res.data
+      const url = new URL(import.meta.env.VITE_API_URL + "/tickets");
+      params.forEach((v, k) => url.searchParams.set(k, v));
+      const res = await axios.get(url.toString());
+      return res.data;
     },
-  })
+  });
 
-  const tickets = data?.data ?? []
+  const tickets = data?.data ?? [];
+  const meta = data;
 
   function onFilterChange(name, value) {
-    if (value) params.set(name, value)
-    else params.delete(name)
-    setParams(params)
+    if (value) params.set(name, value);
+    else params.delete(name);
+    setParams(params);
   }
 
   return (
@@ -30,8 +32,8 @@ export function TicketList() {
         <div className="filter-item">
           <label>Status</label>
           <select
-            value={params.get('status') ?? ''}
-            onChange={(e) => onFilterChange('status', e.target.value)}
+            value={params.get("status") ?? ""}
+            onChange={(e) => onFilterChange("status", e.target.value)}
           >
             <option value="">All</option>
             <option value="open">Open</option>
@@ -43,8 +45,8 @@ export function TicketList() {
         <div className="filter-item">
           <label>Priority</label>
           <select
-            value={params.get('priority') ?? ''}
-            onChange={(e) => onFilterChange('priority', e.target.value)}
+            value={params.get("priority") ?? ""}
+            onChange={(e) => onFilterChange("priority", e.target.value)}
           >
             <option value="">All</option>
             <option value="low">Low</option>
@@ -56,8 +58,8 @@ export function TicketList() {
         <div className="filter-item">
           <label>Department</label>
           <input
-            value={params.get('department') ?? ''}
-            onChange={(e) => onFilterChange('department', e.target.value)}
+            value={params.get("department") ?? ""}
+            onChange={(e) => onFilterChange("department", e.target.value)}
           />
         </div>
       </div>
@@ -81,7 +83,7 @@ export function TicketList() {
                 <td>{t.subject}</td>
                 <td>{t.department}</td>
                 <td className={`priority-${t.priority}`}>{t.priority}</td>
-                <td>{t.status.replace('_', ' ')}</td>
+                <td>{t.status.replace("_", " ")}</td>
                 <td>{new Date(t.created_at).toLocaleString()}</td>
               </tr>
             ))}
@@ -94,7 +96,18 @@ export function TicketList() {
             )}
           </tbody>
         </table>
+        <div className="pagination-container">
+          {meta && meta.total > 0 && (
+            <Pagination
+              currentPage={meta.current_page}
+              totalPages={meta.last_page}
+              totalItems={meta.total}
+              itemsPerPage={meta.per_page}
+              onPageChange={(page) => onFilterChange("page", page)}
+            />
+          )}
+        </div>
       </div>
     </div>
-  )
+  );
 }

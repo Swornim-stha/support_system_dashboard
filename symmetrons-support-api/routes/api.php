@@ -7,3 +7,5 @@ Route::get('/tickets', [TicketController::class, 'index']);
 Route::get('/tickets/stats', [TicketController::class, 'stats']);
 Route::post('/tickets', [TicketController::class, 'store']);
 Route::post('/tickets/{ticket}/resolve', [TicketController::class, 'resolve']);
+Route::put('/tickets/{ticket}', [TicketController::class, 'update']);
+Route::delete('/tickets/{ticket}', [TicketController::class, 'destroy']);
